@@ -1,10 +1,19 @@
 
-import http from 'http';
+const express = require('express')
+const app = express()
+const port = 8080;
 
-http.createServer( (req, res) => {
-    res.write('Hola Mundo');
-    res.end();
-})
-.listen( 8080 );
+/* Middlewere */
+app.use( express.static('public') );
 
-console.log('Escuchando el puerto:', 8080)
+app.get('/hola-mundo', (req, res) => {
+    res.send('Hola mundo!')
+});
+
+app.get('*', (req, res) => {
+    res.sendFile( __dirname + '/public/404.html');
+});
+
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+  })
