@@ -1,27 +1,43 @@
 
 const express = require('express')
+const hbs = require('hbs');
+
 const app = express()
 const port = 8080;
 
+/* Handlebars */
 app.set('view engine', 'hbs');
+hbs.registerPartials( __dirname + '/views/partials' );
 
 /* Middlewere */
 app.use( express.static('public') );
 
 app.get('/', (req, res) => {
-    res.render('home');
+    res.render('home', {
+        name: 'Fernando Nicolás',
+        title: 'Home - Curso de Node'
+    });
 });
 
 app.get('/generic', (req, res) => {
-    res.sendFile( __dirname + '/public/generic.html');
+    res.render('generic', {
+        name: 'Generic',
+        title: 'Generic - Curso de Node'
+    });
 });
 
 app.get('/elements', (req, res) => {
-    res.sendFile( __dirname + '/public/elements.html');
+    res.render('elements', {
+        name: 'Elements',
+        title: 'Elements - Curso de Node'
+    });
 });
 
 app.get('*', (req, res) => {
-    res.sendFile( __dirname + '/public/404.html');
+    res.render('404', {
+        name: '404 - Página no encontrada',
+        title: '404 Página no encontrada - Curso de Node'
+    });
 });
 
 app.listen(port, () => {
